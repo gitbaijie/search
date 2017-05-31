@@ -9,7 +9,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.moses.excel.JxlWrite;
+
 public class JDProductList implements ProductList {
+	
+	private static String storeName = "京东";
 
 	private String jdUrl;
 
@@ -28,7 +32,7 @@ public class JDProductList implements ProductList {
 		List<ProductInfo> jdProductList = new ArrayList<ProductInfo>();
 		ProductInfo productInfo = null;
 		String url = "";
-		for (int i = 0; i < 15; i++) {
+		for (int i = 0; i < 1; i++) {
 			try {
 				System.out.println("JD Product 第[" + (i + 1) + "]页");
 				if (i == 0) {
@@ -80,7 +84,8 @@ public class JDProductList implements ProductList {
 
 	public static void main(String[] args) {
 		try {
-			String productName = "可利鲜";
+//			String productName = "可利鲜";
+			String productName = "iqos";
 			String jdUrl = Constants.JDURL + pcu.getUrlCode(productName) + Constants.JDENC;
 			List<ProductInfo> list = new JDProductList(jdUrl, productName).getProductList();
 			System.out.println("list size: " + list.size());
@@ -89,6 +94,8 @@ public class JDProductList implements ProductList {
 				System.out.println((i + 1) + ": " + pi.getProductUrl() + " " + pi.getProductName() + "  "
 						+ pi.getProductPrice() + " " + pi.getShopName() + " " + pi.getShopUrl());
 			}
+			/* 写入excel */
+			JxlWrite.writeExcel(list, storeName, productName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

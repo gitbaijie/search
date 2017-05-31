@@ -219,4 +219,5 @@ private PriceCheckUtil() {
 		webClient.close();
 		return ret;
 	}
+	
 }
